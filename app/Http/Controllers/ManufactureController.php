@@ -2,14 +2,14 @@
 
 namespace App\Http\Controllers;
 
-use App\Http\Traits\ShowTrait;
+use App\Http\Traits\DBTrait;
 use App\Models\Manufacture;
 use Illuminate\Http\Request;
 use Illuminate\Routing\Controller;
 
 class ManufactureController extends Controller
 {
-    use ShowTrait;
+    use DBTrait;
     public function index(Manufacture $model)//Показ всех категорий
     {
         $this->model=$model;

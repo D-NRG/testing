@@ -2,7 +2,7 @@
 
 namespace App\Http\Controllers;
 
-use App\Http\Traits\ShowTrait;
+use App\Http\Traits\DBTrait;
 use App\Models\Attr;
 use App\Models\Categories;
 use App\Models\Color;
@@ -16,7 +16,7 @@ use Illuminate\Support\Facades\Auth;
 
 class ProductController extends Controller
 {
-    use ShowTrait;
+    use DBTrait;
 
     public function index(Attr $model)
     {

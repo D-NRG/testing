@@ -10,7 +10,7 @@ use App\Models\Product;
 use App\Models\Size;
 
 
-trait ShowTrait
+trait DBTrait
 {
     protected $model;
 
@@ -45,7 +45,9 @@ trait ShowTrait
     protected function show_product($id)
     {
         $par = $this->model->find($id);
-        $attr = Attr::where('categories_id',$par->id)->get();
+        $l = Request()->route()->getPrefix();
+        $l = str_replace('/', '', $l);
+        $attr = Attr::where($l."_id",$par->id)->get();
         $arr = [];
         foreach ($attr as $d)
         {

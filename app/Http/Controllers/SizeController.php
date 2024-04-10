@@ -3,7 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Http\Requests\SizeRequest;
-use App\Http\Traits\ShowTrait;
+use App\Http\Traits\DBTrait;
 use App\Models\Attr;
 use App\Models\Color;
 use App\Models\Product;
@@ -16,7 +16,7 @@ use Illuminate\Support\Facades\DB;
 
 class SizeController extends Controller
 {
-    use ShowTrait;
+    use DBTrait;
     public function index(Size $model)//Показ всех категорий
     {
         $this->model=$model;

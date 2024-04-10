@@ -24,15 +24,15 @@ Route::post('register',[RegisterController::class,'store']);
 Route::post('logout',[SessionController::class,'destroy'])->middleware('auth');
 Route::get('login',[SessionController::class,'create']);
 Route::post('login',[SessionController::class,'store']);
-Route::prefix('category')->group(function () {
-    Route::get('', [CategoriesController::class, 'index'])->name('category');
-    Route::get('create', [CategoriesController::class, 'create'])->name('category.create')->middleware('auth');;
-    Route::post('', [CategoriesController::class, 'store'])->name('category.store')->middleware('auth');;
-    Route::get('{category}', [CategoriesController::class, 'show'])->name('category.show');
-    Route::get('{category}/edit', [CategoriesController::class, 'edit'])->name('category.edit')->middleware('auth');;
-    Route::post('edit', [CategoriesController::class, 'editStore'])->name('category.editStore')->middleware('auth');;
+Route::prefix('categories')->as('categories')->group(function () {
+    Route::get('', [CategoriesController::class, 'index']);
+    Route::get('create', [CategoriesController::class, 'create'])->name('create')->middleware('auth');;
+    Route::post('', [CategoriesController::class, 'store'])->name('store')->middleware('auth');;
+    Route::get('{categories}', [CategoriesController::class, 'show'])->name('show');
+    Route::get('{categories}/edit', [CategoriesController::class, 'edit'])->name('edit')->middleware('auth');;
+    Route::post('edit', [CategoriesController::class, 'editStore'])->name('editStore')->middleware('auth');;
 //    Route::put('{category}', [CategoriesController::class, 'update'])->name('category.update');
-    Route::delete('{category}', [CategoriesController::class, 'delete'])->name('category.delete')->middleware('auth');;
+    Route::delete('{categories}', [CategoriesController::class, 'delete'])->name('.delete')->middleware('auth');;
 });
 Route::prefix('color')->as('color')->group(function (){
     Route::get('', [ColorController::class, 'index']);

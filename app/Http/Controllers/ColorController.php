@@ -2,7 +2,7 @@
 
 namespace App\Http\Controllers;
 
-use App\Http\Traits\ShowTrait;
+use App\Http\Traits\DBTrait;
 use App\Models\Color;
 use Illuminate\Http\Request;
 use Illuminate\Routing\Controller;
@@ -10,7 +10,7 @@ use Illuminate\Routing\Controller;
 
 class ColorController extends Controller
 {
-    use ShowTrait;
+    use DBTrait;
     public function index(Color $model)//Показ всех категорий
     {
         $this->model=$model;
