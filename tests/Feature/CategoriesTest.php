@@ -20,7 +20,7 @@ class CategoriesTest extends TestCase
 
         $response = $this
             ->actingAs($user)
-            ->post('category',[
+            ->post('categories',[
                 'name'=>'car',
             ]);
 
@@ -37,7 +37,7 @@ class CategoriesTest extends TestCase
 
         $response = $this
             ->actingAs($user)
-            ->get("category/1");
+            ->get("categories/1");
 
 
         $response->assertStatus(200);
@@ -49,7 +49,7 @@ class CategoriesTest extends TestCase
 //        $this->test_colors_store();
         $response = $this
             ->actingAs($user)
-            ->post('category/edit', [
+            ->post('categories/edit', [
                 'name' => 'car',
                 'rename' => 'far',
             ]);
@@ -69,7 +69,7 @@ class CategoriesTest extends TestCase
 //        $this->test_categories_editStore();
         $response = $this
             ->actingAs($user)
-            ->delete('category/far');
+            ->delete('categories/far');
         $this->assertDatabaseMissing('categories',[
             'name' => 'far'
         ]);
