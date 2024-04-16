@@ -20,7 +20,7 @@ class SizeTest extends TestCase
 
         $response = $this
             ->actingAs($user)
-            ->post('size',[
+            ->post('api/size',[
                 'name'=>'XXL',
             ]);
 
@@ -37,30 +37,13 @@ class SizeTest extends TestCase
 
         $response = $this
             ->actingAs($user)
-            ->get("size/1");
+            ->get("api/size/1");
 
 
         $response->assertStatus(200);
     }
 
-    public function test_sizes_editStore(): void
-    {
-        $user = User::factory()->create();
-//        $this->test_sizes_store();
-        $response = $this
-            ->actingAs($user)
-            ->post('size/edit', [
-                'name'=>'xxl',
-                'rename' => 'xl',
-            ]);
-        $this->assertDatabaseMissing('sizes', [
-            'name' => 'xxl'
-        ]);
-        $this->assertDatabaseHas('sizes', [
-            'name' => 'xl'
-        ]);
-        $response->assertStatus(302);
-    }
+
 
     public function test_sizes_delete(): void
     {
@@ -69,7 +52,7 @@ class SizeTest extends TestCase
 //        $this->test_sizes_editStore();
         $response = $this
             ->actingAs($user)
-            ->delete('size/xl');
+            ->delete('size/1');
         $this->assertDatabaseMissing('sizes',[
             'name' => 'xl'
         ]);

@@ -11,48 +11,48 @@ class CategoriesController extends Controller
 {
 
     use DBTrait;
-    public function index(Categories $model)//Показ всех категорий
+    public function index(Categories $model)
     {
         $this->model=$model;
         return $this->show_all();
     }
 
-    public function create()//Показ созданной категории
+    /**
+     * Store a newly created resource in storage.
+     */
+    public function store(Categories $model,Request $request)
     {
-        return view('categories.create');
+        $this->model=$model;
+//        return $request->input('name');
+        $categories = $this->store_m(strtolower($request->input('name')));
+        return $categories;
     }
-    public function show(Categories $model,$id)//Показ определенной категории
+
+    /**
+     * Display the specified resource.
+     */
+    public function show(Categories $model,string $id)
     {
         $this->model=$model;
         $categories = $this->show_product($id);
         return $categories;
     }
 
-    public function edit($id,Categories $model)
+    /**
+     * Update the specified resource in storage.
+     */
+    public function update(Request $request, string $id,Categories $model)
     {
         $this->model=$model;
-        $categories = $this->show_one($id);
-        return $categories;
+        $this->edit_m($request->input('name'),$id);
     }
-    public function editStore(Request $request,Categories $model)//Изменение категории
-    {
-        $this->model=$model;
-        $categories = $this->edit_m($request->input('name'),$request->input('rename'));
-        return redirect("categories/$categories->id/edit");
 
-    }
-    public function store(Request $request,Categories $model)//Создание категории
-    {
-        $this->model=$model;
-        $categories = $this->store_m(strtolower($request->input('name')));
-        return redirect('categories');
-
-    }
-    public function delete($id,Categories $model)
+    /**
+     * Remove the specified resource from storage.
+     */
+    public function destroy(Categories $model,string $id)
     {
         $this->model=$model;
         $this->delete_m($id);
-        return redirect('categories');
-
     }
 }

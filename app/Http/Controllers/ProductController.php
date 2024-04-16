@@ -18,54 +18,33 @@ class ProductController extends Controller
 {
     use DBTrait;
 
-    public function index(Attr $model)
+    public function index(Product $model)
     {
         $this->model=$model;
-        return $this->show_all_product();
+        return $this->show_all();
     }
-    public function show(Product $model,$id)
+    public function show(Product $model,string $id)
     {
         $this->model=$model;
-        $par = $this->show_product($id);
-        return $par;
+        $categories = $this->show_product($id);
+        return $categories;
     }
 
-    public function store(Request $request)
+    public function store(Product $model,Request $request)
     {
-        $product = new Product;
-        $product->name = strtolower($request->input('name'));
-        $product->save();
-        $categories = Categories::where('name',$request->input('categories'));
-        $manufacture = Manufacture::where('name',$request->input('manufacture'));
-        $color = Color::where('name',$request->input('color'));
-        $size = Size::where('name',$request->input('size'));
-        $attr = new Attr;
-        $attr->product_id = $product->id;
-        $attr->color_id = $color->id;
-        $attr->categories_id = $categories->id;
-        $attr->manufacture_id = $manufacture->id;
-        $attr->size_id = $size->id;
-        $attr->save();
-        return redirect('product');
+        $this->model=$model;
+//        return $request->input('name');
+        $product = $this->store_m(strtolower($request->input('name')));
+        return $product;
+
     }
     public function delete(Product $model,$id)
     {
-
         $this->model=$model;
         $this->delete_m($id);
-        return redirect('product');
-
     }
 
-    public function editStore(Request $request,Product $model)
-    {
 
-        $this->model=$model;
-        $par = $this->edit_m($request->input('name'),$request->input('rename'));
-        return redirect('product');
-
-
-    }
 
 }
 

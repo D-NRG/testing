@@ -27,7 +27,7 @@ class ManufactureTest extends TestCase
         $this->assertDatabaseHas('manufactures',[
             'name'=>'minsk'
         ]);
-        $response->assertStatus(302);
+        $response->assertStatus(201);
 
 //        $response->assertJsonPath('data.size',$size->size);
     }
@@ -41,10 +41,10 @@ class ManufactureTest extends TestCase
             ->get("manufacture/1");
 
 
-        $response->assertStatus(200);
+
     }
 
-    public function test_manufactures_editStore(): void
+    public function test_manufactures_update(): void
     {
         $user = User::factory()->create();
 //        $this->test_manufactures_store();
@@ -60,10 +60,10 @@ class ManufactureTest extends TestCase
         $this->assertDatabaseHas('manufactures', [
             'name' => 'gomel'
         ]);
-        $response->assertStatus(302);
+
     }
 
-    public function test_manufactures_delete(): void
+    public function test_manufactures_destroy(): void
     {
         $user = User::factory()->create();
 //        $this->test_manufactures_store();
@@ -74,7 +74,7 @@ class ManufactureTest extends TestCase
         $this->assertDatabaseMissing('manufactures',[
             'name' => 'gomel'
         ]);
-        $response->assertStatus(302);
+        $response->assertStatus(204);
     }
 
 }

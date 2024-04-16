@@ -5,9 +5,8 @@ namespace App\Http\Controllers;
 use App\Http\Requests\SizeRequest;
 use App\Http\Traits\DBTrait;
 use App\Models\Attr;
-use App\Models\Color;
-use App\Models\Product;
 use App\Models\Size;
+use App\Models\Product;
 use App\Services\FooService;
 use Illuminate\Http\Request;
 use Illuminate\Routing\Controller;
@@ -17,48 +16,48 @@ use Illuminate\Support\Facades\DB;
 class SizeController extends Controller
 {
     use DBTrait;
-    public function index(Size $model)//Показ всех категорий
+    public function index(Size $model)
     {
         $this->model=$model;
         return $this->show_all();
     }
 
-    public function create()//Показ созданной категории
+    /**
+     * Store a newly created resource in storage.
+     */
+    public function store(Size $model,Request $request)
     {
-        return view('size.create');
+        $this->model=$model;
+//        return $request->input('name');
+        $size = $this->store_m(strtolower($request->input('name')));
+        return $size;
     }
-    public function show(Size $model,$id)//Показ определенной категории
+
+    /**
+     * Display the specified resource.
+     */
+    public function show(Size $model,string $id)
     {
         $this->model=$model;
         $size = $this->show_product($id);
         return $size;
     }
 
-    public function edit($id,Size $model)
+    /**
+     * Update the specified resource in storage.
+     */
+    public function update(Request $request, string $id,Size $model)
     {
         $this->model=$model;
-        $size = $this->show_one($id);
-        return $size;
+        $this->edit_m($request->input('name'),$id);
     }
-    public function editStore(Request $request,Size $model)//Изменение категории
+
+    /**
+     * Remove the specified resource from storage.
+     */
+    public function destroy(Size $model,string $id)
     {
         $this->model=$model;
-        $size = $this->edit_m($request->input('name'),$request->input('rename'));
-        return redirect("size/$size->id/edit");
-
-    }
-    public function store(Request $request,Size $model)//Создание категории
-    {
-        $this->model=$model;
-        $size = $this->store_m(strtolower($request->input('name')));
-        return redirect('size');
-
-    }
-    public function delete($name,Size $model)
-    {
-        $this->model=$model;
-        $this->delete_m($name);
-        return redirect('size');
-
+        $this->delete_m($id);
     }
 }

@@ -11,48 +11,48 @@ use Illuminate\Routing\Controller;
 class ColorController extends Controller
 {
     use DBTrait;
-    public function index(Color $model)//Показ всех категорий
+    public function index(Color $model)
     {
         $this->model=$model;
         return $this->show_all();
     }
 
-    public function create()//Показ созданной категории
+    /**
+     * Store a newly created resource in storage.
+     */
+    public function store(Color $model,Request $request)
     {
-        return view('Color.create');
+        $this->model=$model;
+//        return $request->input('name');
+        $color = $this->store_m(strtolower($request->input('name')));
+        return $color;
     }
-    public function show(Color $model,$id)//Показ определенной категории
+
+    /**
+     * Display the specified resource.
+     */
+    public function show(Color $model,string $id)
     {
         $this->model=$model;
         $color = $this->show_product($id);
         return $color;
     }
 
-    public function edit($id,Color $model)
+    /**
+     * Update the specified resource in storage.
+     */
+    public function update(Request $request, string $id,Color $model)
     {
         $this->model=$model;
-        $color = $this->show_one($id);
-        return $color;
+        $this->edit_m($request->input('name'),$id);
     }
-    public function editStore(Request $request,Color $model)//Изменение категории
-    {
-        $this->model=$model;
-        $color = $this->edit_m($request->input('name'),$request->input('rename'));
-        return redirect("color/$color->id/edit");
 
-    }
-    public function store(Request $request,Color $model)//Создание категории
-    {
-        $this->model=$model;
-        $color = $this->store_m(strtolower($request->input('name')));
-        return redirect('color');
-
-    }
-    public function delete($id,Color $model)
+    /**
+     * Remove the specified resource from storage.
+     */
+    public function destroy(Color $model,string $id)
     {
         $this->model=$model;
         $this->delete_m($id);
-        return redirect('color');
-
     }
 }

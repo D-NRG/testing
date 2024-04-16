@@ -16,13 +16,7 @@ trait DBTrait
 
     protected function show_all()
     {
-        $s = $this->model->all();
-        return $s;
-    }
-    protected function show_one($id)
-    {
-        $s = $this->model->find($id);
-        return $s;
+        return $this->model->all();
     }
     protected function show_all_product()
     {
@@ -44,9 +38,9 @@ trait DBTrait
     }
     protected function show_product($id)
     {
-        $par = $this->model->find($id);
-        $l = Request()->route()->getPrefix();
-        $l = str_replace('/', '', $l);
+        $par = $this->model->findOrFail($id);
+        $l = Request()->route()->getAction();
+        $l = str_replace('.show', '', $l['as']);
         $attr = Attr::where($l."_id",$par->id)->get();
         $arr = [];
         foreach ($attr as $d)
@@ -56,26 +50,25 @@ trait DBTrait
         return $arr;
     }
 
-    protected function edit_m($name,$rename)
+    protected function edit_m(string $name,$id)
     {
-        $par = $this->model->where('name',$name)->first();
-        $par->name = $rename;
-        $par->save();
-        return $par;
+        $par = $this->model->findOrFail($id);
+        $par->name = $name;
+        if($par->save())return response($par,200);
     }
+
 
     protected function store_m($name)
     {
-        $par = $this->model->firstOrCreate(['name'=>$name]);;
-        $par->save();
-        return $par;
+        $par = $this->model->firstOrCreate(['name'=>$name]);
+        if($par->save()) return response($par,201);
     }
 
 
-    protected function delete_m($name)
+    protected function delete_m($id)
     {
-        $par = $this->model->where('name',$name)->first();
-        $par->delete();
+        $par = $this->model->where('id',$id)->first();
+        if($par->delete()) return response(null, 204);
     }
 
 }
