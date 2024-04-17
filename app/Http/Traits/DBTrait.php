@@ -44,31 +44,38 @@ trait DBTrait
         $attr = Attr::where($l."_id",$par->id)->get();
         $arr = [];
         foreach ($attr as $d)
-        {
             $arr[] = Product::where('id',$d->product_id)->first();
-        }
         return $arr;
     }
 
-    protected function edit_m(string $name,$id)
+    protected function edit_m($name,$id)
     {
         $par = $this->model->findOrFail($id);
         $par->name = $name;
         if($par->save())return response($par,200);
+        return response('Error update',500);
     }
 
 
     protected function store_m($name)
     {
         $par = $this->model->firstOrCreate(['name'=>$name]);
-        if($par->save()) return response($par,201);
+        $data = $par;
+
+        $response = [
+            'status' => 'success',
+            'message' => 'Store successfully.',
+            'data' => $data,];
+        if($par->save()) return response($response,201);
+        return response('Error store',500);
     }
 
 
     protected function delete_m($id)
     {
         $par = $this->model->where('id',$id)->first();
-        if($par->delete()) return response(null, 204);
+        if($par->delete())return response(null, 204);
+        return response('Error delete',404);
     }
 
 }
