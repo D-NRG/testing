@@ -22,10 +22,10 @@ class AttrFactory extends Factory
     public function definition(): array
     {
         return [
-            'color_id' => Color::get()->random()->id,
-            'size_id' => Size::get()->random()->id,
-            'manufacture_id' => Manufacture::get()->random()->id,
-            'product_id' => Product::get()->random()->id,
+            'colors_id' => Color::get()->random()->id,
+            'sizes_id' => Size::get()->random()->id,
+            'manufactures_id' => Manufacture::get()->random()->id,
+            'products_id' => Product::get()->random()->id,
             'categories_id' => Categories::get()->random()->id,
         ];
     }

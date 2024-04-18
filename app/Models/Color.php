@@ -12,6 +12,6 @@ class Color extends Model
 
     use HasFactory;
     protected $fillable =['name'];
-    protected $table = 'colors';
+    public $table = 'colors';
 
 }

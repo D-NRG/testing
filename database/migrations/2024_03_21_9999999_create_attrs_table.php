@@ -13,20 +13,20 @@ return new class extends Migration
     {
         Schema::create('attrs', function (Blueprint $table) {
             $table->increments('id');
-            $table->integer('color_id')->unsigned()->default(1);
-            $table->integer('size_id')->unsigned()->default(1);
-            $table->integer('manufacture_id')->unsigned()->default(1);
-            $table->integer('product_id')->unsigned()->default(1);
+            $table->integer('colors_id')->unsigned()->default(1);
+            $table->integer('sizes_id')->unsigned()->default(1);
+            $table->integer('manufactures_id')->unsigned()->default(1);
+            $table->integer('products_id')->unsigned()->default(1);
             $table->integer('categories_id')->unsigned()->default(1);
-            $table->index('color_id');
-            $table->index('size_id');
-            $table->index('manufacture_id');
-            $table->index('product_id');
+            $table->index('colors_id');
+            $table->index('sizes_id');
+            $table->index('manufactures_id');
+            $table->index('products_id');
             $table->index('categories_id');
-            $table->foreign('color_id')->references('id')->on('colors')->cascadeOnDelete();
-            $table->foreign('size_id')->references('id')->on('sizes')->cascadeOnDelete();
-            $table->foreign('manufacture_id')->references('id')->on('manufactures')->cascadeOnDelete();
-            $table->foreign('product_id')->references('id')->on('products')->cascadeOnDelete();
+            $table->foreign('colors_id')->references('id')->on('colors')->cascadeOnDelete();
+            $table->foreign('sizes_id')->references('id')->on('sizes')->cascadeOnDelete();
+            $table->foreign('manufactures_id')->references('id')->on('manufactures')->cascadeOnDelete();
+            $table->foreign('products_id')->references('id')->on('products')->cascadeOnDelete();
             $table->foreign('categories_id')->references('id')->on('categories')->cascadeOnDelete();
             $table->timestamps();
         });

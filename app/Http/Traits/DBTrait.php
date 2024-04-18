@@ -22,11 +22,11 @@ trait DBTrait
     {
         $par = $this->model->all();
             foreach ($par as $d) {
-            $product = Product::where('id',$d->product_id)->first();
-            $size = Size::where('id',$d->size_id)->first();
-            $color = Color::where('id',$d->color_id)->first();
+            $product = Product::where('id',$d->products_id)->first();
+            $size = Size::where('id',$d->sizes_id)->first();
+            $color = Color::where('id',$d->colors_id)->first();
             $cat = Categories::where('id',$d->categories_id)->first();
-            $manuf = Manufacture::where('id',$d->manufacture_id)->first();
+            $manuf = Manufacture::where('id',$d->manufactures_id)->first();
             $myarr[] = 'ID: '.$product->id;
             $myarr[] = 'NAME: '.$product->name;
             $myarr[] = 'SIZE: '.$size->name;
@@ -39,12 +39,11 @@ trait DBTrait
     protected function show_product($id)
     {
         $par = $this->model->findOrFail($id);
-        $l = Request()->route()->getAction();
-        $l = str_replace('.show', '', $l['as']);
-        $attr = Attr::where($l."_id",$par->id)->get();
+//        dd($par->table.'_id');
+        $attr = Attr::where($par->table."_id",$par->id)->get();
         $arr = [];
         foreach ($attr as $d)
-            $arr[] = Product::where('id',$d->product_id)->first();
+            $arr[] = Product::where('id',$d->products_id)->first();
         return $arr;
     }
 

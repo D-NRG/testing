@@ -36,11 +36,11 @@ class AttrController extends Controller
         $color = Color::where('name',$request->input('color'))->first();
         $size = Size::where('name',$request->input('size'))->first();
         $attr = new Attr;
-        $attr->product_id = $product->id;
-        $attr->color_id = $color->id;
+        $attr->products_id = $product->id;
+        $attr->colors_id = $color->id;
         $attr->categories_id = $categories->id;
-        $attr->manufacture_id = $manufacture->id;
-        $attr->size_id = $size->id;
+        $attr->manufactures_id = $manufacture->id;
+        $attr->sizes_id = $size->id;
         $attr->save();
         return $attr;
     }
@@ -51,8 +51,8 @@ class AttrController extends Controller
     public function show(string $id)
     {
         $attr = Attr::findOrFail($id);
-        $array=['Product '=>Product::where('id',$attr->product_id)->first()->name,'Size'=>Size::where('id',$attr->size_id)->first()->name,
-            'Color'=>Color::where('id',$attr->color_id)->first()->name,'Manufacture'=>Manufacture::where('id',$attr->manufacture_id)->first()->name,
+        $array=['Product '=>Product::where('id',$attr->products_id)->first()->name,'Size'=>Size::where('id',$attr->sizes_id)->first()->name,
+            'Color'=>Color::where('id',$attr->colors_id)->first()->name,'Manufacture'=>Manufacture::where('id',$attr->manufactures_id)->first()->name,
             'Categories'=>Categories::where('id',$attr->categories_id)->first()->name];
         return $array;
 
