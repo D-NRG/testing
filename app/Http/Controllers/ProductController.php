@@ -38,12 +38,7 @@ class ProductController extends Controller
         return $product;
 
     }
-    public function update(Request $request, string $id,Product $model)
-    {
-        $this->model=$model;
-        $this->edit_m($request->input('name'),$id);
-    }
-    public function destroy(Product $model,$id)
+    public function delete(Product $model,$id)
     {
         $this->model=$model;
         $this->delete_m($id);

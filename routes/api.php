@@ -46,7 +46,7 @@ Route::controller(ManufactureController::class)->group(function () {
 });
 Route::controller(CategoriesController::class)->group(function () {
     Route::get('/categories', 'index');
-    Route::get('/categories/{id}', 'show');
+    Route::get('/caregories/{id}', 'show');
 });
 Route::controller(ProductController::class)->group(function () {
     Route::get('/product', 'index');

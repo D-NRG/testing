@@ -10,6 +10,6 @@ class Categories extends Model
     use HasFactory;
 
     protected $guarded =[];
-    public $table = 'categories';
+    protected $table = 'categories';
     protected $fillable =['name'];
 }

@@ -11,10 +11,6 @@
 |
 */
 
-use Nuwave\Lighthouse\LighthouseServiceProvider;
-use Nuwave\Lighthouse\Pagination\PaginationServiceProvider;
-use Nuwave\Lighthouse\Validation\ValidationServiceProvider;
-
 $app = new Illuminate\Foundation\Application(
     $_ENV['APP_BASE_PATH'] ?? dirname(__DIR__)
 );
@@ -44,10 +40,6 @@ $app->singleton(
     Illuminate\Contracts\Debug\ExceptionHandler::class,
     App\Exceptions\Handler::class
 );
-$app->configure('lighthouse');
-$app->register(LighthouseServiceProvider::class);
-$app->register(PaginationServiceProvider::class);
-$app->register(ValidationServiceProvider::class);
 
 /*
 |--------------------------------------------------------------------------
