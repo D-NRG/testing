@@ -5,83 +5,84 @@ scalar DateTime @scalar(class: "Nuwave\\Lighthouse\\Schema\\Types\\Scalars\\Date
 type Query {
     users: [User!] @paginate(defaultCount: 10)
     user(id:ID @eq): User @find
-    products: [Product!] @paginate (defaultCount: 2)
-    product(id:ID @eq): Product @find
-    attrs: [Attr!] @paginate(defaultCount: 2)
-    attr(id:ID @eq): Attr @find
-    categoriess: [Categories!] @paginate(defaultCount: 10)
-    categories(id:ID @eq): Categories @find
-    colors: [Color!] @paginate(defaultCount: 10)
-    color(id:ID @eq): Color @find
-    sizes: [Size!] @paginate(defaultCount: 10)
-    size(id:ID @eq): Size @find
-    manufactures: [Manufacture!] @paginate(defaultCount: 10)
-    manufacture(id:ID @eq): Manufacture @find
+    products: [Product!]! @field(resolver: "App\\GraphQL\\Queries\\ProductResolver")
+    sizes: [Size!]! @field(resolver: "App\\GraphQL\\Queries\\SizeResolver")
+    colors: [Color!]! @field(resolver: "App\\GraphQL\\Queries\\ColorResolver")
+    manufactures: [Manufacture!]! @field(resolver: "App\\GraphQL\\Queries\\ManufactureResolver")
+    categoriess: [Categories!]! @field(resolver: "App\\GraphQL\\Queries\\CategoriesResolver")
+    attrs: [Attr!]! @field(resolver: "App\\GraphQL\\Queries\\AttrResolver")
+    product(id:ID): Product @field(resolver: "App\\GraphQL\\Queries\\ProductResolver@show")
+    size(id:ID): Size @field(resolver: "App\\GraphQL\\Queries\\SizeResolver@show")
+    color(id:ID): Color @field(resolver: "App\\GraphQL\\Queries\\ColorResolver@show")
+    manufacture(id:ID): Manufacture @field(resolver: "App\\GraphQL\\Queries\\ManufactureResolver@show")
+    categories(id:ID): Categories @field(resolver: "App\\GraphQL\\Queries\\CategoriesResolver@show")
+    attr(id:ID): Attr @field(resolver: "App\\GraphQL\\Queries\\AttrResolver@show")
 
 }
 type Mutation {
     createColor(
         name:String! @rules(apply: ["required"])
-    ): Color @create
+    ): Color @field(resolver: "App\\GraphQL\\Queries\\ColorResolver@create")
     createSize(
         name:String! @rules(apply: ["required"])
-    ): Size @create
+    ): Size @field(resolver: "App\\GraphQL\\Queries\\SizeResolver@create")
     createManufacture(
         name:String! @rules(apply: ["required"])
-    ): Manufacture @create
+    ): Manufacture @field(resolver: "App\\GraphQL\\Queries\\ManufactureResolver@create")
     createCategories(
         name:String! @rules(apply: ["required"])
-    ): Categories @create
+    ): Categories @field(resolver: "App\\GraphQL\\Queries\\CategoriesResolver@create")
     createProduct(
         name:String! @rules(apply: ["required"])
-    ): Product @create
+    ): Product @field(resolver: "App\\GraphQL\\Queries\\ProductResolver@create")
     createAttr(
         color_id:Int! @rules(apply: ["required"])
         size_id:Int! @rules(apply: ["required"])
         manufacture_id:Int! @rules(apply: ["required"])
         categories_id:Int! @rules(apply: ["required"])
         product_id:Int! @rules(apply: ["required"])
-    ): Attr @create
+    ): Attr @field(resolver: "App\\GraphQL\\Queries\\AttrResolver@create")
     updateColor(
         id:ID!
         name: String! @rules(apply: ["required"])
-    ): Color @update
+    ): Color @field(resolver: "App\\GraphQL\\Queries\\ColorResolver@update")
     updateSize(
         id:ID!
         name: String! @rules(apply: ["required"])
-    ): Size @update
+    ): Size @field(resolver: "App\\GraphQL\\Queries\\SizeResolver@update")
     updateManufacture(
         id:ID!
         name: String! @rules(apply: ["required"])
-    ): Manufacture @update
+    ): Manufacture @field(resolver: "App\\GraphQL\\Queries\\ManufactureResolver@update")
     updateCategories(
         id:ID!
         name: String! @rules(apply: ["required"])
-    ): Categories @update
+    ): Categories @field(resolver: "App\\GraphQL\\Queries\\CategoriesResolver@update")
     updateProduct(
         id:ID!
         name: String! @rules(apply: ["required"])
-    ): Product @update
-    updateAttrColor(
+    ): Product @field(resolver: "App\\GraphQL\\Queries\\ProductResolver@update")
+    updateAttr(
         id:ID!
-        color_id:Int! @rules(apply: ["required"])
-    ): Attr @update
-    updateAttrSize(
-        id:ID!
-        size_id:Int! @rules(apply: ["required"])
-    ): Attr @update
-    updateAttrManufacture(
-        id:ID!
-        manufacture_id:Int! @rules(apply: ["required"])
-    ): Attr @update
-    updateAttrCategories(
-        id:ID!
-        categories_id:Int! @rules(apply: ["required"])
-    ): Attr @update
-    updateAttrProduct(
-        id:ID!
-        product_id:Int! @rules(apply: ["required"])
-    ): Attr @update
+        attr_id:Int!
+        column:String!
+    ): Attr @field(resolver: "App\\GraphQL\\Queries\\AttrResolver@update")
+#    updateAttrSize(
+#        id:ID!
+#        size_id:Int! @rules(apply: ["required"])
+#    ): Attr @update
+#    updateAttrManufacture(
+#        id:ID!
+#        manufacture_id:Int! @rules(apply: ["required"])
+#    ): Attr @update
+#    updateAttrCategories(
+#        id:ID!
+#        categories_id:Int! @rules(apply: ["required"])
+#    ): Attr @update
+#    updateAttrProduct(
+#        id:ID!
+#        product_id:Int! @rules(apply: ["required"])
+#    ): Attr @update
     deleteColor(
         id:ID! @eq
     ): Color @delete

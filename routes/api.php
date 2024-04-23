@@ -7,6 +7,7 @@ use App\Http\Controllers\ManufactureController;
 use App\Http\Controllers\ProductController;
 use App\Http\Controllers\SizeController;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Http;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -48,14 +49,52 @@ Route::controller(CategoriesController::class)->group(function () {
     Route::get('/categories', 'index');
     Route::get('/categories/{id}', 'show');
 });
-Route::controller(ProductController::class)->group(function () {
-    Route::get('/product', 'index');
-    Route::get('/product/{id}', 'show');
-});
+//Route::controller(ProductController::class)->group(function () {
+//    Route::get('/product', 'index');
+//    Route::get('/product/{id}', 'show');
+//});
 Route::controller(AttrController::class)->group(function () {
     Route::get('/attr', 'index');
     Route::get('/attr/{id}', 'show');
 });
+
+Route::get('/product',function (){
+   $response = Http::post('http://test/graphql',[
+      'query'=>'
+      query{
+        products{
+            id
+            name
+            attrs{
+                size{name}
+                color{name}
+                manufacture{name}
+                categories{name}
+            }
+        }
+       }'
+   ]);
+   dd($response->json());
+//   return response()->json()['data'],['products'],['data'];
+});
+//Route::get('/product/{id}',function ($id){
+//   $response = Http::post('http://test/graphql',[
+//       'query'=>'
+//      query{
+//        product(id: $id){
+//            id
+//            name
+//            attrs{
+//                size{name}
+//                color{name}
+//                manufacture{name}
+//                categories{name}
+//            }
+//        }
+//       }'
+//   ]);
+//    dd($response->json());
+//});
 
 Route::middleware('auth:api')->group(function (){
     Route::post('/logout',[\App\Http\Controllers\RegisterController::class,'logout']);
