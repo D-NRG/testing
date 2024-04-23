@@ -39,8 +39,8 @@ trait DBTrait
     protected function show_product($id)
     {
         $par = $this->model->findOrFail($id);
-        $l = Request()->route()->getAction();
-        $l = str_replace('.show', '', $l['as']);
+        $l = Request()->route();
+        $l = str_replace(['api/','/{id}'], '', $l->uri);
         $attr = Attr::where($l."_id",$par->id)->get();
         $arr = [];
         foreach ($attr as $d)

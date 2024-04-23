@@ -9,7 +9,10 @@ class Manufacture extends Model
 {
     use HasFactory;
     protected $guarded =[];
-    public $table = 'manufactures';
+    protected $table = 'manufactures';
     protected $fillable =['name'];
+    public function attrs(){
+        return $this->hasMany(Attr::class);
+    }
 
 }

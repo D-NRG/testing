@@ -30,7 +30,7 @@ class DatabaseSeeder extends Seeder
         Size::factory(10)->create();
         Manufacture::factory(10)->create();
         Categories::factory(10)->create();
-        Product::factory(10)->create();
+        Product::factory(5)->create();
         Attr::factory(10)->create();
         User::factory(50)->create();
 

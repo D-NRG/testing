@@ -3,39 +3,159 @@ scalar DateTime @scalar(class: "Nuwave\\Lighthouse\\Schema\\Types\\Scalars\\Date
 
 "Indicates what fields are available at the top level of a query operation."
 type Query {
-    "Find a single user by an identifying attribute."
-    user(
-      "Search by primary key."
-      id: ID @eq @rules(apply: ["prohibits:email", "required_without:email"])
+    users: [User!] @paginate(defaultCount: 10)
+    user(id:ID @eq): User @find
+    products: [Product!] @paginate (defaultCount: 2)
+    product(id:ID @eq): Product @find
+    attrs: [Attr!] @paginate(defaultCount: 2)
+    attr(id:ID @eq): Attr @find
+    categoriess: [Categories!] @paginate(defaultCount: 10)
+    categories(id:ID @eq): Categories @find
+    colors: [Color!] @paginate(defaultCount: 10)
+    color(id:ID @eq): Color @find
+    sizes: [Size!] @paginate(defaultCount: 10)
+    size(id:ID @eq): Size @find
+    manufactures: [Manufacture!] @paginate(defaultCount: 10)
+    manufacture(id:ID @eq): Manufacture @find
 
-      "Search by email address."
-      email: String @eq @rules(apply: ["prohibits:id", "required_without:id", "email"])
-    ): User @find
-
-    "List multiple users."
-    users(
-      "Filters by name. Accepts SQL LIKE wildcards `%` and `_`."
-      name: String @where(operator: "like")
-    ): [User!]! @paginate(defaultCount: 10)
+}
+type Mutation {
+    createColor(
+        name:String! @rules(apply: ["required"])
+    ): Color @create
+    createSize(
+        name:String! @rules(apply: ["required"])
+    ): Size @create
+    createManufacture(
+        name:String! @rules(apply: ["required"])
+    ): Manufacture @create
+    createCategories(
+        name:String! @rules(apply: ["required"])
+    ): Categories @create
+    createProduct(
+        name:String! @rules(apply: ["required"])
+    ): Product @create
+    createAttr(
+        color_id:Int! @rules(apply: ["required"])
+        size_id:Int! @rules(apply: ["required"])
+        manufacture_id:Int! @rules(apply: ["required"])
+        categories_id:Int! @rules(apply: ["required"])
+        product_id:Int! @rules(apply: ["required"])
+    ): Attr @create
+    updateColor(
+        id:ID!
+        name: String! @rules(apply: ["required"])
+    ): Color @update
+    updateSize(
+        id:ID!
+        name: String! @rules(apply: ["required"])
+    ): Size @update
+    updateManufacture(
+        id:ID!
+        name: String! @rules(apply: ["required"])
+    ): Manufacture @update
+    updateCategories(
+        id:ID!
+        name: String! @rules(apply: ["required"])
+    ): Categories @update
+    updateProduct(
+        id:ID!
+        name: String! @rules(apply: ["required"])
+    ): Product @update
+    updateAttrColor(
+        id:ID!
+        color_id:Int! @rules(apply: ["required"])
+    ): Attr @update
+    updateAttrSize(
+        id:ID!
+        size_id:Int! @rules(apply: ["required"])
+    ): Attr @update
+    updateAttrManufacture(
+        id:ID!
+        manufacture_id:Int! @rules(apply: ["required"])
+    ): Attr @update
+    updateAttrCategories(
+        id:ID!
+        categories_id:Int! @rules(apply: ["required"])
+    ): Attr @update
+    updateAttrProduct(
+        id:ID!
+        product_id:Int! @rules(apply: ["required"])
+    ): Attr @update
+    deleteColor(
+        id:ID! @eq
+    ): Color @delete
+    deleteSize(
+        id:ID! @eq
+    ): Size @delete
+    deleteManufacture(
+        id:ID! @eq
+    ): Manufacture @delete
+    deleteCategories(
+        id:ID! @eq
+    ): Categories @delete
+    deleteProduct(
+        id:ID! @eq
+    ): Product @delete
+    deleteAttr(
+        id:ID! @eq
+    ): Attr @delete
 }
 
 "Account of a person who utilizes this application."
+
 type User {
-    "Unique primary key."
     id: ID!
-
-    "Non-unique name."
     name: String!
-
-    "Unique email address."
     email: String!
-
-    "When the email was verified."
-    email_verified_at: DateTime
-
-    "When the account was created."
+    email_verifield_at: DateTime!
+    password: String!
+#    remember_token: String!
     created_at: DateTime!
-
-    "When the account was last updated."
     updated_at: DateTime!
+}
+type Color {
+    id: ID!
+    name: String!
+    attrs: [Attr!]! @hasMany
+    created_at: DateTime!
+    updated_at: DateTime!
+}
+type Size {
+    id: ID!
+    name: String!
+    attrs: [Attr!]! @hasMany
+    created_at: DateTime!
+    updated_at: DateTime!
+}
+type Manufacture {
+    id: ID!
+    name: String!
+    attrs: [Attr!]! @hasMany
+    created_at: DateTime!
+    updated_at: DateTime!
+}
+type Categories {
+    id: ID!
+    name: String!
+    attrs: [Attr!]! @hasMany
+    created_at: DateTime!
+    updated_at: DateTime!
+}
+type Product {
+    id: ID!
+    name: String!
+    attrs: [Attr!]! @hasMany
+    created_at: DateTime!
+    updated_at: DateTime!
+}
+type Attr {
+    id: ID!
+    color: Color! @belongsTo
+    size: Size! @belongsTo
+    manufacture: Manufacture! @belongsTo
+    categories: Categories! @belongsTo
+    product: Product! @belongsTo
+    created_at: DateTime! @belongsTo
+    updated_at: DateTime! @belongsTo
 }

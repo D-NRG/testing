@@ -78,4 +78,5 @@ class AttrController extends Controller
         $this->model=$model;
         $this->delete_m($id);
     }
+
 }

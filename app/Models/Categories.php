@@ -12,4 +12,7 @@ class Categories extends Model
     protected $guarded =[];
     protected $table = 'categories';
     protected $fillable =['name'];
+    public function attrs(){
+        return $this->hasMany(Attr::class);
+    }
 }

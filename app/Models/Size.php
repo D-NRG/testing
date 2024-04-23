@@ -11,5 +11,8 @@ class Size extends Model
     protected $guarded =[];
     protected $table = 'sizes';
     protected $fillable = ['name'];
+    public function attrs(){
+        return $this->hasMany(Attr::class);
+    }
 
 }

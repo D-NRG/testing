@@ -14,4 +14,7 @@ class Color extends Model
     protected $fillable =['name'];
     protected $table = 'colors';
 
+    public function attrs(){
+        return $this->hasMany(Attr::class);
+    }
 }
